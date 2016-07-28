@@ -7,3 +7,9 @@ El proyecto se encuentra desacoplado en 5 componentes:
 3. com.norbs.spider.dao - Capa de acceso a datos (Data Access Object).
 4. com.norbs.spider.service - Capa de lógica de negocio en la que están los procesos para cargar catálogos de libros y el spider para descargar las portadas de libros.
 5. com.norbs.spider.web - Aplicación cliente que consume los servicios proporcionados por la capa de negocio.
+
+Tecnologías empleadas:
+- Java EE 7
+- Spring framework 4.2.6
+- Spring security 4.0.1
+- Eclipselink 2.5.2
