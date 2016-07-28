@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="@{layout/layout-section}">
+    <section layout:fragment="section">
+        <div class="container">
+            <div class="alert alert-danger" role="alert">
+                Se han descargado 
+                <strong><span th:text="${cantidadPortadasDescargadas}"> </span></strong>
+                portadas en el directorio "\portadas".
+            </div>
+            <a href="/logout">Cerrar sesi&oacute;n</a>
+        </div>
+    </section>
+</html>

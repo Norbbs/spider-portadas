@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="@{layout/layout-section}">
+    <section layout:fragment="section">
+        <div th:if="${rol}=='admin'">
+            <strong>
+                <span th:text="${user}"> , Bienvenid@ a la  web administrativa. Aqu&iacute;
+                    podr&aacute; cargar cat&aacute;logos y descargar portadas de la web.</span>
+            </strong>
+            <a href="/admin/catalogo">">Cargar catalogos</a>
+            <a href="/admin/spider">">Descargar portadas</a>
+        </div>
+
+        <div th:if="${rol}=='usuario'">
+            <strong>
+                <span th:text="${user}">, Bienvenid@!
+            </strong>
+        </div>
+
+        <div th:if="${rol}=='dba'">
+            <strong>
+                <span th:text="${user}">, Bienvenid@ a la web DBA. Aqu&iacute;
+                    podr&aacute; descargar portadas de la web.</span>
+            </strong>
+            <a href="/admin/spider">">Descargar portadas</a>
+        </div>
+
+        <a href="/logout">Cerrar sesi&oacute;n</a>
+    </section>
+</html>
