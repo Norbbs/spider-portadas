@@ -13,3 +13,9 @@ Tecnologías empleadas:
 - Spring framework 4.2.6
 - Spring security 4.0.1
 - Eclipselink 2.5.2
+- Thymeleaf 2.1.4
+- Maven 4.0.0
+
+Directorios:
+- Catalogos de libros: /catalogos
+- Portadas de libros descargadas: /portadas 
