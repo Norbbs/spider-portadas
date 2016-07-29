@@ -18,6 +18,10 @@ public class SecurityUtil {
      * @return cadena de texto cifrada.
      */
     public static String cifrarMD5(String texto) {
+        
+        if (StringUtil.esNulaOVacia(texto)) {
+            return null;
+        }
 
         MessageDigest md;
         StringBuffer sb = new StringBuffer();

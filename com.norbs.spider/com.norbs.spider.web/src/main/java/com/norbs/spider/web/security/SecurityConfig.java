@@ -1,13 +1,15 @@
-package com.norbs.spider.web.config;
+package com.norbs.spider.web.security;
 
-import com.norbs.spider.common.classes.SecurityUtil;
-import com.norbs.spider.service.usuarios.UsuarioService;
+import com.norbs.spider.entity.usuarios.Usuario;
+import com.norbs.spider.service.usuarios.UsuarioServiceImpl;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  *
@@ -16,25 +18,39 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  */
 @Configuration
 @EnableWebSecurity
+@EnableTransactionManagement(proxyTargetClass = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    UsuarioService usuarioService;
+    private UsuarioServiceImpl usuarioServiceImpl;
 
+    /**
+     * Configuracion de roles de usuario en memoria para pruebas.
+     * @param auth
+     * @throws Exception 
+     */
     @Autowired
     public void configurarRolesUsuario(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("admin").password(SecurityUtil.cifrarMD5("admin")).roles("ADMIN");
-        auth.inMemoryAuthentication().withUser("user").password(SecurityUtil.cifrarMD5("user")).roles("USER");
-        auth.inMemoryAuthentication().withUser("dba").password(SecurityUtil.cifrarMD5("dba")).roles("ADMIN", "DBA");
+        
+        List<Usuario> resultado = this.usuarioServiceImpl.consultarUsuarios();
+        if (resultado.isEmpty()) {
+            Usuario usuario = this.usuarioServiceImpl.crearUsuarioPorDefecto();
+            resultado.add(usuario);
+        }
+
+        for (Usuario usuario : resultado) {
+            auth.inMemoryAuthentication()
+                    .withUser(usuario.getNombre())
+                    .password(usuario.getPassword())
+                    .authorities("ROLE_USER");
+        }
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/home").access("hasRole('USER')")
-                .antMatchers("/admin/**").access("hasRole('ADMIN')")
-                .antMatchers("/db/**").access("hasRole('ADMIN') and hasRole('DBA')")
-                .and().formLogin().loginPage("/login").successHandler(usuarioService)
+                .antMatchers("/admin/**").access("hasRole('USER')")
+                .and().formLogin().loginPage("/")
                 .usernameParameter("username").passwordParameter("password")
                 .and().csrf()
                 .and().exceptionHandling().accessDeniedPage("/Access_Denied");

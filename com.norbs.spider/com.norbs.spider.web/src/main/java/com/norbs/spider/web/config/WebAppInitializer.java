@@ -12,7 +12,7 @@ import org.springframework.web.servlet.DispatcherServlet;
  * @author Norbs norbbs@gmail.com +58-4143832967
  * https://ve.linkedin.com/in/norbbs
  */
-public class ServletInitializerConfig implements WebApplicationInitializer {
+public class WebAppInitializer implements WebApplicationInitializer {
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
@@ -23,6 +23,5 @@ public class ServletInitializerConfig implements WebApplicationInitializer {
                 "SpringDispatcher", new DispatcherServlet(appContext));
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
-
     }
 }

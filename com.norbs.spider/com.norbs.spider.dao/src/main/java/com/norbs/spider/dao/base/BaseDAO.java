@@ -4,7 +4,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.transaction.Transactional;
+import org.springframework.stereotype.Repository;
 
 /**
  * Clase base para el manejo de persistencia en el sistema.
@@ -13,12 +13,13 @@ import javax.transaction.Transactional;
  * @param <INSTANCE_CLASS> Clase que implementa la interfaz
  * @param <PRIMARY_KEY_CLASS> Clave primaria de la instancia
  */
+@Repository
 public class BaseDAO<INSTANCE_CLASS, PRIMARY_KEY_CLASS> implements RepositorioDAO<INSTANCE_CLASS, PRIMARY_KEY_CLASS> {
 
     //<editor-fold defaultstate="collapsed" desc="EntityManager">
     @PersistenceContext(unitName = "UnidadPersistencia")
     private EntityManager entityManager;
-    
+
     protected EntityManager getEntityManager() {
         return entityManager;
     }
@@ -40,7 +41,6 @@ public class BaseDAO<INSTANCE_CLASS, PRIMARY_KEY_CLASS> implements RepositorioDA
      *
      * @param namedQuery nombre clave asignado a una instruccion JPQL a ejecutar
      */
-    @Transactional
     @Override
     public void ejecutar(String namedQuery) {
         Query query = this.getEntityManager().createNamedQuery(namedQuery);
@@ -54,7 +54,6 @@ public class BaseDAO<INSTANCE_CLASS, PRIMARY_KEY_CLASS> implements RepositorioDA
      * @param namedQuery nombre clave asignado a una instruccion JPQL a ejecutar
      * @param parametros lista de parametros
      */
-    @Transactional
     @Override
     public void ejecutar(String namedQuery, List<Object> parametros) {
         Query query = this.getEntityManager().createNamedQuery(namedQuery);
@@ -66,14 +65,35 @@ public class BaseDAO<INSTANCE_CLASS, PRIMARY_KEY_CLASS> implements RepositorioDA
         query.executeUpdate();
     }
     
+    /**
+     * Ejecuta un namedQuery para consultar (SELECT) registros
+     *
+     * @param namedQuery nombre clave asignado a una instruccion JPQL a ejecutar
+     * @return Lista de resultados
+     */
     @Override
     public List<INSTANCE_CLASS> consultar(String namedQuery) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query query = this.getEntityManager().createNamedQuery(namedQuery);
+        return query.getResultList();
     }
 
+    /**
+     * Ejecuta un namedQuery para consultar (SELECT) registros con una lista
+     * de parametros.
+     *
+     * @param namedQuery nombre clave asignado a una instruccion JPQL a ejecutar
+     * @param parametros lista de parametros
+     * @return Lista de resultados
+     */
     @Override
     public List<INSTANCE_CLASS> consultar(String namedQuery, List<Object> parametros) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query query = this.getEntityManager().createNamedQuery(namedQuery);
+        int i = 1;
+        for (Object parametro : parametros) {
+            query.setParameter("p"+i, parametro);
+            i++;
+        }        
+        return query.getResultList();
     }
     //</editor-fold>
 }
