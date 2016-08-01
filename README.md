@@ -3,12 +3,12 @@ Aplicación que se encarga de cargar catálogos de libros (en formato XML) y de 
 Para realizar ambas acciones la aplicación cuenta con un proceso de autenticación de usuarios.
 
 El proyecto se encuentra desacoplado en 6 componentes o Capas:
-1. com.norbs.spider.common: Donde se manejan procesos genéricos como utilidades empleados por otros componentes que facilitan sus operaciones.
-2. com.norbs.spider.entity: Aquí se define la capa de persistencia en el que se encuentran las entidades a trabajar basada en anotaciones JPA 2.
-3. com.norbs.spider.dao: Capa de acceso a datos (Data Access Object) En este nivel se definen todas las clases DAO, las cuales serán el único vínculo del sistema con las entidades en base de datos.
-4. com.norbs.spider.service: Capa de lógica de negocio que incluye todas las entidades de negocio que implementan las reglas que deben llevar a cabo las operaciones para cargar catálogos de libros y el spider para descargar las portadas.
-5. com.norbs.spider.web: Capa de presentación es la que da apariencia visual al sistema y está construída con Spring MVC.
-6. com.norbs.spider.rest - Web service empleado como interfaz para que pueda ser accedido por otras aplicaciones a través de Rest Controllers de Spring.
+- 1. com.norbs.spider.common: Donde se manejan procesos genéricos como utilidades empleados por otros componentes que facilitan sus operaciones.
+- 2. com.norbs.spider.entity: Aquí se define la capa de persistencia en el que se encuentran las entidades a trabajar basada en anotaciones JPA 2.
+- 3. com.norbs.spider.dao: Capa de acceso a datos (Data Access Object) En este nivel se definen todas las clases DAO, las cuales serán el único vínculo del sistema con las entidades en base de datos.
+- 4. com.norbs.spider.service: Capa de lógica de negocio que incluye todas las entidades de negocio que implementan las reglas que deben llevar a cabo las operaciones para cargar catálogos de libros y el spider para descargar las portadas.
+- 5. com.norbs.spider.web: Capa de presentación es la que da apariencia visual al sistema y está construída con Spring MVC.
+- 6. com.norbs.spider.rest - Web service empleado como interfaz para que pueda ser accedido por otras aplicaciones a través de Rest Controllers de Spring.
 
 Tecnologías empleadas:
 - Java EE 7
