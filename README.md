@@ -27,3 +27,4 @@ Infraestructura:
 - No es necesario ejecutar ningún script en la base de datos para la creación de tablas, solo basta con crear una base de datos y llamar "spider", las tablas se generarán automáticamente cuando se inicie la aplicación.
 - La unidad de persistencia se encuentra en com.norbs.spider.dao por si se desea cambiar el driver de base de datos y credenciales.
 - Se debe configurar el servidor donde estará alojada la aplicación en el caso de Glassfish puede basta con crear un Pool de conexiones "SpiderPool" y el recurso JDBC está definido como "jdbc/spider".
+- La base de datos tiene un usuario por defecto sus credenciales son: Usuario: norbs y Contraseña: norbs
