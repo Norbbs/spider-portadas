@@ -1,7 +1,5 @@
 package com.norbs.spider.web.controller;
 
-import com.norbs.spider.service.libros.LibroServiceImpl;
-import com.norbs.spider.service.libros.SpiderPortadasServiceImpl;
 import com.norbs.spider.service.usuarios.UsuarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,12 +19,6 @@ public class LoginController {
     @Autowired
     private UsuarioServiceImpl usuarioServiceImpl;
 
-    @Autowired
-    private LibroServiceImpl libroServiceImpl;
-
-    @Autowired
-    private SpiderPortadasServiceImpl spiderPortadasServiceImpl;
-
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView login() {
         ModelAndView mav = new ModelAndView();
@@ -40,10 +32,7 @@ public class LoginController {
 
         try {
             this.usuarioServiceImpl.login(username, password);
-            this.libroServiceImpl.procesarCatalogosLibros();
-            //this.spiderPortadasServiceImpl.iniciarDescargaPortadas();
             mav.setViewName("main");
-            mav.addObject("mensaje", "Se descargaron " + this.spiderPortadasServiceImpl.getCantidadPortadasDescargadas() + " portadas de forma exitosa en directorio /portadas/.");
         } catch (Exception ex) {
             mav.setViewName("login");
             mav.addObject("error", ex.getMessage());
