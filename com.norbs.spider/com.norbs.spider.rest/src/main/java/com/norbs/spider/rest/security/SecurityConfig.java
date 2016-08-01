@@ -1,4 +1,4 @@
-package com.norbs.spider.web.security;
+package com.norbs.spider.rest.security;
 
 import com.norbs.spider.entity.usuarios.Usuario;
 import com.norbs.spider.service.usuarios.UsuarioServiceImpl;
@@ -50,12 +50,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/home").permitAll()
+                .antMatchers("/catalogo").access("hasRole('ROLE_USER')")
+                .antMatchers("/spider").access("hasRole('ROLE_USER')")
                 .and().formLogin().loginPage("/")
                 .usernameParameter("username").passwordParameter("password")
                 .and().csrf()
                 .and().exceptionHandling().accessDeniedPage("/Access_Denied");
 
     }
-
 }

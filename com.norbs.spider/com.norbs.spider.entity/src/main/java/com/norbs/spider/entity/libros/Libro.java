@@ -8,7 +8,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
- *
+ * Entidad que define una tabla "libro". Hereda atributos de la clase "EntidadBase".
  * @author Norbs norbbs@gmail.com +58-4143832967
  * https://ve.linkedin.com/in/norbbs
  */
@@ -26,7 +26,7 @@ public class Libro extends EntidadBase {
     @Column(nullable = false, length = 13)
     private String isbn;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 150)
     private String titulo;
 
     @Column(nullable = true, length = 255)

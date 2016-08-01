@@ -1,17 +1,13 @@
-package com.norbs.spider.web.config;
+package com.norbs.spider.rest.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.jta.JtaTransactionManager;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
 
 /**
  * Clase que equivale al archivo applicationContext de la configuracion xml.
@@ -22,18 +18,13 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableWebMvc
 @Configuration
 @ComponentScan(basePackages = {"com.norbs.spider.*"})
-@EnableTransactionManagement(proxyTargetClass = true)
 public class ApplicationContextConfig extends WebMvcConfigurerAdapter {
 
-    @Bean
-    public InternalResourceViewResolver viewResolver() {
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setViewClass(JstlView.class);
-        viewResolver.setPrefix("/WEB-INF/pages/");
-        viewResolver.setSuffix(".jsp");
-        return viewResolver;
-    }
-
+    /**
+     * 
+     * @return Bean que posee la unidad de persistencia con la que se va a trabajar
+     * y que esta definida en la capa DAO.
+     */
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
@@ -41,19 +32,13 @@ public class ApplicationContextConfig extends WebMvcConfigurerAdapter {
         return em;
     }
 
+    /**
+     * 
+     * @return Bean que gestiona las transacciones entre el EntityManagerFactory
+     * y los componentes involucrados.
+     */
     @Bean
     public PlatformTransactionManager platformTransactionManager() {
         return new JtaTransactionManager();
-    }
-
-    /**
-     * Configura los archivos contenidos en la carpeta "assets" (CSS,
-     * Javascriptm etc)
-     *
-     * @param registry
-     */
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/assets/**").addResourceLocations("/assets/");
     }
 }

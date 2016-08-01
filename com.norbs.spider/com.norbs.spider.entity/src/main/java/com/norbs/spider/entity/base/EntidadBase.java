@@ -7,7 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 /**
- *
+ * Super clase en la que se definen los atributos "comunes" que heredarán sus
+ * clases hijas. Está anotada como @MappedSuperclass.
  * @author Norbs norbbs@gmail.com +58-4143832967
  * https://ve.linkedin.com/in/norbbs
  */

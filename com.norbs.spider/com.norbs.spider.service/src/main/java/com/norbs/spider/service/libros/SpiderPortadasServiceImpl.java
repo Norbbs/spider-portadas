@@ -17,13 +17,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
- *  Clase que se encarga de descargar portadas a libros que no poseen portadas
+ * Clase que se encarga de descargar portadas a libros que no poseen portadas
  * @author Norbs norbbs@gmail.com +58-4143832967
  * https://ve.linkedin.com/in/norbbs
  */
 @Service
+@Transactional
 public class SpiderPortadasServiceImpl extends BaseService implements SpiderPortadasService {
     
     //<editor-fold defaultstate="collapsed" desc="Atributos">
@@ -32,7 +34,7 @@ public class SpiderPortadasServiceImpl extends BaseService implements SpiderPort
 
     //<editor-fold defaultstate="collapsed" desc="LibroService">
     /**
-     * Descarga portadas para libros que no tengan en un directorio por defecto.
+     * Descarga portadas para libros en un directorio por defecto (/portadas").
      */
     @Override
     public void iniciarDescargaPortadas() {
@@ -369,6 +371,10 @@ public class SpiderPortadasServiceImpl extends BaseService implements SpiderPort
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Métodos públicos">
+    /**
+     * 
+     * @return Cantidad de portadas que han sido descargadas.
+     */
     public int getCantidadPortadasDescargadas() {
         return isbnsActualizar == null ? 0 : isbnsActualizar.size();
     }

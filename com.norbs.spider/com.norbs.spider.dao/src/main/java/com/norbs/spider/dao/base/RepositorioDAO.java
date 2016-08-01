@@ -3,7 +3,7 @@ package com.norbs.spider.dao.base;
 import java.util.List;
 
 /**
- *
+ * Interfaz que define operaciones a realizar en la base de datos.
  * @author Norbs norbbs@gmail.com +58-4143832967
  * https://ve.linkedin.com/in/norbbs
  * @param <INSTANCE_CLASS> Clase que implementa la interfaz
@@ -20,4 +20,6 @@ public interface RepositorioDAO<INSTANCE_CLASS, PRIMARY_KEY_CLASS> {
     public List<INSTANCE_CLASS> consultar(String namedQuery);
     
     public List<INSTANCE_CLASS> consultar(String namedQuery, List<Object> parametros);
+    
+    public Object consultarEntidad(String namedQuery, List<Object> parametros);
 }

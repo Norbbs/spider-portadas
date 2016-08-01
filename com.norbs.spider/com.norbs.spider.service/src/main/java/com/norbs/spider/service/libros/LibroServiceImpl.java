@@ -16,14 +16,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Clase que se encarga de gestionar el inicio del sistema con la lectura
- * de un catalogo de libros en la base de datos.
+ * Clase que se encarga de gestionar lo referente a la carga de un catalogo de 
+ * libros en la base de datos.
  * @author Norbs norbbs@gmail.com +58-4143832967
  * https://ve.linkedin.com/in/norbbs
  */
 @Service
+@Transactional
 public class LibroServiceImpl extends BaseService implements LibroService {
 
     //<editor-fold defaultstate="collapsed" desc="LibroService">
@@ -61,6 +63,13 @@ public class LibroServiceImpl extends BaseService implements LibroService {
         }
     }
 
+    /**
+     * Valida que la entidad en contreto (Libro) cumpla con las reglas de negocio
+     * establecidas
+     * @param <T> Entidad que extiende de la clase EntidadBase.
+     * @param entidad Entidad a ser validada.
+     * @throws Exception Cuando exista una inconsistencia.
+     */
     @Override
     public <T extends EntidadBase> void validar(T entidad) throws Exception {
 
@@ -73,12 +82,23 @@ public class LibroServiceImpl extends BaseService implements LibroService {
         if (StringUtil.esNulaOVacia(libro.getIsbn())) {
             throw new Exception("ERROR: Cada libro en el catalogo debe contener un isbn");
         }
+        
+        if (libro.getIsbn().length() > 13) {
+            libro.setIsbn(libro.getIsbn().substring(0, 13));
+        }
 
         if (StringUtil.esNulaOVacia(libro.getTitulo())) {
             throw new Exception("ERROR: Cada libro en el catalogo debe contener un titulo");
         }
+        
+        if (libro.getTitulo().length() > 100) {
+            libro.setIsbn(libro.getIsbn().substring(0, 100));
+        }
     }
     
+    /**
+     * Ejecuta un namedquery para eliminar libros
+     */
     @Override
     public void eliminarLibros() {
         this.libroDAO.ejecutar("Libro.delete");
@@ -86,6 +106,11 @@ public class LibroServiceImpl extends BaseService implements LibroService {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Métodos privados">
+    /**
+     * Crea la ruta absoluta de donde se descargará finalmente el catálogo de libros.
+     * @param nombreArchivo
+     * @return 
+     */
     private String construirRutaFinalCatalogo(String nombreArchivo) {
         StringBuilder sb = new StringBuilder(Constantes.RUTA_CATALOGO_LIBROS);
         sb.append('/');
@@ -93,6 +118,12 @@ public class LibroServiceImpl extends BaseService implements LibroService {
         return sb.toString();
     }
 
+    /**
+     * Valida que el catálogo de libros a cargar posea una estructura correcta.
+     * @param catalogoLibroXML Catálogo de libros en formato XML a cargar.
+     * @param nombreCatalogo Nombre del catálogo de libros.
+     * @throws Exception Cuando exista una inconsistencia.
+     */
     private void validarCatalogo(CatalogoLibroXML catalogoLibroXML, String nombreCatalogo) throws Exception {
 
         if (catalogoLibroXML == null) {
@@ -104,6 +135,12 @@ public class LibroServiceImpl extends BaseService implements LibroService {
         }
     }
 
+    /**
+     * Procesa la carga del catálogo de libros creando por cada item o producto 
+     * una nueva entidad "Libro" seteando sus datos y finalmente insertandola en
+     * la base de datos.
+     * @param catalogoLibroXML Catálogo de libros en formato XML a cargar.
+     */
     private void cargarCatalogo(CatalogoLibroXML catalogoLibroXML) {
 
         catalogoLibroXML.getProductList().stream().forEach((producto) -> {

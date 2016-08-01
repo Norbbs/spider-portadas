@@ -10,7 +10,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- *
+ * Entidad que define una tabla "usuario" y los namedqueries con los que va a 
+ * trabajar. Hereda atributos de la clase "EntidadBase".
  * @author Norbs norbbs@gmail.com +58-4143832967
  * https://ve.linkedin.com/in/norbbs
  */

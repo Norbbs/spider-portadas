@@ -17,6 +17,7 @@
     <body>
         <div class="container" style="margin-top:40px">
             <c:if test="${not empty error}"><div class="alert alert-danger">${error}</div></c:if>
+            <c:if test="${not empty mensaje}"><div class="alert alert-success">${mensaje}</div></c:if>
             <div class="row">
                 <div class="col-sm-6 col-md-4 col-md-offset-4">
                     <div class="panel panel-default">
@@ -24,7 +25,7 @@
                             <strong> Login</strong>
                         </div>
                         <div class="panel-body">
-                            <form name='login' action="<c:url value='/admin' />" method='POST'>
+                            <form name='login' action="<c:url value='/login' />" method='POST'>
                                 <fieldset>
                                     <div class="row">
                                         <div class="col-sm-12 col-md-10  col-md-offset-1 ">
@@ -36,6 +37,7 @@
                                                     <input class="form-control" placeholder="Nombre de usuario" name="username" type="text" autofocus required="required">
                                                 </div>
                                             </div>
+                                            
                                             <div class="form-group">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
@@ -44,11 +46,12 @@
                                                     <input class="form-control" placeholder="Password" name="password" type="password" value="" required="required">
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <button type="submit" class="btn">Iniciar sesi&oacute;n</button>
-                                            </div>
-
+                                            
                                             <input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />
+                                            
+                                            <div class="form-group">
+                                                <button type="submit" class="btn">Procesar datos</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </fieldset>

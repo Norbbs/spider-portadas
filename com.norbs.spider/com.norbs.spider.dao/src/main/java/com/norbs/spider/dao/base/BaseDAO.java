@@ -7,7 +7,9 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 /**
- * Clase base para el manejo de persistencia en el sistema.
+ * Clase base para el manejo de persistencia en el sistema, implementa la interfaz
+ * RepositorioDAO que contiene metodos para realizar operaciones en la base de 
+ * datos.
  * @author Norbs norbbs@gmail.com +58-4143832967
  * https://ve.linkedin.com/in/norbbs
  * @param <INSTANCE_CLASS> Clase que implementa la interfaz
@@ -94,6 +96,25 @@ public class BaseDAO<INSTANCE_CLASS, PRIMARY_KEY_CLASS> implements RepositorioDA
             i++;
         }        
         return query.getResultList();
+    }
+    
+    /**
+     * Ejecuta un namedQuery para consultar (SELECT) una entidad especifica en la
+     * base de datos
+     *
+     * @param namedQuery nombre clave asignado a una instruccion JPQL a ejecutar
+     * @param parametros lista de parametros
+     * @return Entidad resultante
+     */
+    @Override
+    public Object consultarEntidad(String namedQuery, List<Object> parametros) {
+        Query query = this.getEntityManager().createNamedQuery(namedQuery);
+        int i = 1;
+        for (Object parametro : parametros) {
+            query.setParameter("p"+i, parametro);
+            i++;
+        }        
+        return query.getSingleResult();
     }
     //</editor-fold>
 }

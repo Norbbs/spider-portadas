@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -14,26 +15,23 @@ import org.springframework.web.servlet.ModelAndView;
  * https://ve.linkedin.com/in/norbbs
  */
 @Controller
-@RequestMapping(value = {"/admin/catalogo"})
 public class CatalogoLibroController {
     
     @Autowired
     private LibroServiceImpl libroServiceImpl;
     
+    @RequestMapping(value = "/catalogo", method = {RequestMethod.GET})
     public ModelAndView getVistaCatalogo() {
-        String info;
+        ModelAndView mav = new ModelAndView("main");
+        
         try {
             this.libroServiceImpl.procesarCatalogosLibros();
-            info = "Catalogos cargados exitosamente.!";
+            mav.addObject("mensaje", "Catalogos cargados exitosamente.!");
         } catch (Exception ex) {
             Logger.getLogger(CatalogoLibroController.class.getName()).log(Level.SEVERE, null, ex);
-            info = ex.getMessage();
+            mav.addObject("error", ex.getMessage());
         }
         
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("catalogo");
-        mav.addObject("info", info);
-        mav.addObject("titulo", "Catalogos de libros");
         return mav;
     }
 }

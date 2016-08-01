@@ -11,7 +11,8 @@
         <module>com.norbs.spider.entity</module>
         <module>com.norbs.spider.service</module>
     <module>com.norbs.spider.web</module>
-  </modules>
+        <module>com.norbs.spider.rest</module>
+    </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>

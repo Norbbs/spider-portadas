@@ -1,6 +1,7 @@
 package com.norbs.spider.service.base;
 
 import com.norbs.spider.dao.libros.LibroDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 public abstract class BaseService {
     
     //<editor-fold defaultstate="collapsed" desc="Beans">
+    @Autowired
     protected LibroDAO libroDAO;
     //</editor-fold>
 
