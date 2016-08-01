@@ -27,7 +27,7 @@ public class SpiderRestController {
      * @return ResponseEntity que representa una respuesta HTTP con el resultado 
      * de la solicitud.
      */
-    @RequestMapping(value = "/spider", method = RequestMethod.POST)
+    @RequestMapping(value = "/spider", method = RequestMethod.GET)
     public ResponseEntity<?> ejecutarSpider() {
         
         Map<String, Object> mapRespuesta = new HashMap<>();

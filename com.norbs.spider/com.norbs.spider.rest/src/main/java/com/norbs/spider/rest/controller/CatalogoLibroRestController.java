@@ -27,7 +27,7 @@ public class CatalogoLibroRestController {
      * @return ResponseEntity que representa una respuesta HTTP con el resultado 
      * de la solicitud.
      */
-    @RequestMapping(value = "/catalogo", method = RequestMethod.POST)
+    @RequestMapping(value = "/catalogo", method = RequestMethod.GET)
     public ResponseEntity<?> ejecutarSpider() {
         
         Map<String, Object> mapRespuesta = new HashMap<>();

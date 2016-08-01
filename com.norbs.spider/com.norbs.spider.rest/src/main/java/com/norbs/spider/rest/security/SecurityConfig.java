@@ -49,9 +49,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/catalogo").access("hasRole('ROLE_USER')")
-                .antMatchers("/spider").access("hasRole('ROLE_USER')")
+       http.authorizeRequests()
+                .antMatchers("/", "/home").permitAll()
                 .and().formLogin().loginPage("/")
                 .usernameParameter("username").passwordParameter("password")
                 .and().csrf()
