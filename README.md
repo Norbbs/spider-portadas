@@ -8,7 +8,6 @@ El proyecto se encuentra desacoplado en 6 componentes o Capas:
 - com.norbs.spider.dao: Capa de acceso a datos (Data Access Object) En este nivel se definen todas las clases DAO, las cuales serán el único vínculo del sistema con las entidades en base de datos.
 - com.norbs.spider.service: Capa de lógica de negocio que incluye todas las entidades de negocio que implementan las reglas que deben llevar a cabo las operaciones para cargar catálogos de libros y el spider para descargar las portadas.
 - com.norbs.spider.web: Capa de presentación es la que da apariencia visual al sistema y está construída con Spring MVC.
-- com.norbs.spider.rest - Web service empleado como interfaz para que pueda ser accedido por otras aplicaciones a través de Rest Controllers de Spring.
 
 Tecnologías empleadas:
 - Java EE 7
